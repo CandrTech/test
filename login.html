@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inloggen — Mobix</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body{min-height:100vh;background:#fff;color:#1d1d1f}
+    .login-top{height:72px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100% - 1260px)/2));}
+    .login-logo{font-size:32px;letter-spacing:-1.5px;color:#171717;text-decoration:none;font-weight:400}
+    .login-logo span{color:var(--green)}
+    .login-back{color:#333;text-decoration:none;font-weight:600}
+    .login-wrap{min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:35px 20px;background:#fafafa}
+    .login-card{width:100%;max-width:430px;background:#fff;border:1px solid #ddd;border-radius:16px;padding:34px;box-shadow:0 8px 30px rgba(0,0,0,.05)}
+    .login-card .brand-mark{text-align:center;color:#171717;font-size:32px;letter-spacing:-1.5px;font-weight:400;margin-bottom:24px}
+    .login-card .brand-mark span{color:var(--green)}
+    .login-card h1{font-size:27px;text-align:center;margin-bottom:8px;color:#171717}
+    .login-sub{text-align:center;color:#666;margin-bottom:28px}
+    .login-label{display:block;font-weight:700;margin:16px 0 8px}
+    .login-input{width:100%;padding:14px;border:1px solid #ccc;border-radius:10px;font-size:16px;outline:none}
+    .login-input:focus{border:2px solid var(--green);padding:13px;box-shadow:0 0 0 3px rgba(24,198,91,.08)}
+    .forgot{text-align:right;margin:10px 0 20px}
+    .forgot a,.register a{color:#12ad4e;text-decoration:none;font-weight:600}
+    .login-card button.primary{background:var(--green);color:#fff}
+    .login-card button.primary:hover{background:#12b34f}
+    .login-message{display:none;background:#fff3f3;color:#a22;border:1px solid #f0cccc;border-radius:10px;padding:12px;margin-top:15px;font-size:14px}
+    .register{text-align:center;margin-top:22px;color:#666}
+    @media(max-width:600px){.login-top{height:62px;padding:0 16px}.login-logo{font-size:28px}.login-wrap{padding:20px 14px}.login-card{padding:25px 20px}}
+  </style>
+</head>
+<body>
+  <header class="login-top">
+    <a class="login-logo" href="index.html">m<span>o</span>bix</a>
+    <a class="login-back" href="index.html">← Terug</a>
+  </header>
+
+  <main class="login-wrap">
+    <div class="login-card">
+      <div class="brand-mark">m<span>o</span>bix</div>
+      <h1>Welkom terug</h1>
+      <p class="login-sub">Log in op je Mobix-account</p>
+
+      <form id="loginForm">
+        <label class="login-label" for="email">E-mailadres</label>
+        <input class="login-input" id="email" type="email" placeholder="jouw@email.nl" required>
+
+        <label class="login-label" for="password">Wachtwoord</label>
+        <input class="login-input" id="password" type="password" placeholder="Je wachtwoord" required>
+
+        <div class="forgot"><a href="#">Wachtwoord vergeten?</a></div>
+
+        <button class="primary" type="submit">Inloggen →</button>
+        <div class="login-message" id="message">Vul een geldig e-mailadres en wachtwoord in.</div>
+      </form>
+
+      <div class="register">Nog geen account? <a href="#">Account aanmaken</a></div>
+    </div>
+  </main>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const msg = document.getElementById("message");
+
+  if (email === "CandrPhones@gmail.com" && password === "Mobix2026!!") {
+    msg.style.display = "none";
+    window.location.href = "dashboard.html";
+  } else {
+    msg.textContent = "Onjuiste e-mail of wachtwoord.";
+    msg.style.display = "block";
+  }
+});
+</script>
+</body>
+</html>

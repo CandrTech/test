@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mobix Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-page">
+<div class="dashboard-shell">
+  <header class="dashboard-header">
+    <a class="dashboard-logo" href="index.html">Mobi<span>x</span></a>
+    <div class="dashboard-user"><span>Ingelogd als</span><strong>CandrPhones</strong><a href="index.html">Uitloggen</a></div>
+  </header>
+
+  <main class="dashboard-main">
+    <div class="dashboard-title-row">
+      <div><p class="dashboard-eyebrow">BEHEER</p><h1>Dashboard</h1><p>Beheer aanvragen, ordernummers en inruilen vanuit één overzicht.</p></div>
+      <a class="dashboard-primary" href="index.html">+ Nieuwe aanvraag</a>
+    </div>
+
+    <section class="stats-grid">
+      <div class="stat-card"><span>Openstaande aanvragen</span><strong id="openCount">3</strong><small>Wachten op verwerking</small></div>
+      <div class="stat-card"><span>Deze maand</span><strong id="monthCount">12</strong><small>Nieuwe aanvragen</small></div>
+      <div class="stat-card"><span>Uitbetaald</span><strong id="paidCount">€ 2.840</strong><small>Deze maand</small></div>
+      <div class="stat-card"><span>Orders</span><strong id="orderCount">18</strong><small>Alle ordernummers</small></div>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="dashboard-card applications-card">
+        <div class="card-heading"><div><h2>Aanvragen</h2><p>Recente inruilaanvragen</p></div><button class="text-button" id="showAllBtn">Alles bekijken</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Ordernummer</th><th>Model</th><th>Klant</th><th>Bedrag</th><th>Status</th><th></th></tr></thead><tbody id="applicationTable"></tbody></table></div>
+      </div>
+
+      <div class="dashboard-card order-card">
+        <div class="card-heading"><div><h2>Ordernummer zoeken</h2><p>Bekijk snel de status van een aanvraag.</p></div></div>
+        <div class="order-search"><input id="orderSearch" placeholder="Bijv. MOB-1024" autocomplete="off"><button id="searchOrder">Zoeken</button></div>
+        <div id="orderResult" class="order-result muted-result">Voer een ordernummer in om een aanvraag te zoeken.</div>
+      </div>
+    </section>
+
+    <section class="dashboard-card all-orders" id="allOrdersSection">
+      <div class="card-heading"><div><h2>Alle orders</h2><p>Overzicht van alle inruilorders.</p></div><select id="statusFilter"><option value="all">Alle statussen</option><option value="Nieuw">Nieuw</option><option value="In behandeling">In behandeling</option><option value="Uitbetaald">Uitbetaald</option></select></div>
+      <div class="table-wrap"><table><thead><tr><th>Ordernummer</th><th>Datum</th><th>Model</th><th>Opslag</th><th>Bedrag</th><th>Status</th></tr></thead><tbody id="ordersTable"></tbody></table></div>
+    </section>
+  </main>
+</div>
+<script>
+const applications = [
+ {order:'MOB-1024',model:'iPhone 15 Pro',customer:'Anoniem',amount:295,date:'20 sep 2026',storage:'256 GB',status:'Nieuw'},
+ {order:'MOB-1023',model:'iPhone 14',customer:'Anoniem',amount:165,date:'20 sep 2026',storage:'128 GB',status:'In behandeling'},
+ {order:'MOB-1022',model:'iPhone 13',customer:'Anoniem',amount:125,date:'19 sep 2026',storage:'128 GB',status:'Uitbetaald'},
+ {order:'MOB-1021',model:'iPhone 12',customer:'Anoniem',amount:100,date:'18 sep 2026',storage:'64 GB',status:'In behandeling'},
+ {order:'MOB-1020',model:'iPhone 11 Pro',customer:'Anoniem',amount:110,date:'17 sep 2026',storage:'256 GB',status:'Uitbetaald'}
+];
+const saved = JSON.parse(localStorage.getItem('mobixApplications') || '[]');
+const data = [...saved, ...applications.filter(a=>!saved.some(s=>s.order===a.order))];
+function badge(status){return '<span class="status status-'+status.toLowerCase().replaceAll(' ','-')+'">'+status+'</span>'}
+function renderRecent(){document.getElementById('applicationTable').innerHTML=data.slice(0,5).map(a=>`<tr><td><b>${a.order}</b></td><td>${a.model}</td><td>${a.customer}</td><td>€ ${a.amount}</td><td>${badge(a.status)}</td><td><button class="row-btn" onclick="findOrder('${a.order}')">Bekijk</button></td></tr>`).join('')}
+function renderOrders(){const filter=document.getElementById('statusFilter').value;document.getElementById('ordersTable').innerHTML=data.filter(a=>filter==='all'||a.status===filter).map(a=>`<tr><td><b>${a.order}</b></td><td>${a.date}</td><td>${a.model}</td><td>${a.storage}</td><td>€ ${a.amount}</td><td>${badge(a.status)}</td></tr>`).join('')}
+function findOrder(value){const q=value.trim().toUpperCase();const a=data.find(x=>x.order.toUpperCase()===q);const box=document.getElementById('orderResult');if(!a){box.className='order-result error-result';box.innerHTML='<strong>Niet gevonden</strong><br>Er is geen aanvraag met dit ordernummer gevonden.';return}box.className='order-result';box.innerHTML=`<div class="result-top"><strong>${a.order}</strong>${badge(a.status)}</div><div class="result-lines"><span>Model <b>${a.model}</b></span><span>Opslag <b>${a.storage}</b></span><span>Bedrag <b>€ ${a.amount}</b></span><span>Datum <b>${a.date}</b></span></div>`}
+document.getElementById('searchOrder').onclick=()=>findOrder(document.getElementById('orderSearch').value);document.getElementById('orderSearch').addEventListener('keydown',e=>{if(e.key==='Enter')findOrder(e.target.value)});document.getElementById('statusFilter').onchange=renderOrders;document.getElementById('showAllBtn').onclick=()=>document.getElementById('allOrdersSection').scrollIntoView({behavior:'smooth'});renderRecent();renderOrders();
+</script>
+</body></html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#151515">
+  <title>Mobix — Verkoop je iPhone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="homePage">
+    <div class="utility-bar">
+      <div class="utility-left">
+        <span>♢ 2 jaar garantie</span><span>◉ Uitgebreid getest op 50 punten</span><span>▯ Incl. gratis screenprotector</span>
+      </div>
+      <div class="utility-right"><span>Klantenservice</span><span>Wat is refurbished?</span><span>★ 9.1</span><span>▰ thuiswinkel waarborg</span></div>
+    </div>
+
+    <header class="site-header">
+      <a class="logo" href="#">m<span>o</span>bix</a>
+      <div class="search"><input placeholder="Zoeken ..." aria-label="Zoeken"><span>⌕</span></div>
+      <div class="header-icons"><a href="login.html" aria-label="Account">♙</a><a href="#" aria-label="Winkelwagen">🛒</a></div>
+    </header>
+
+    <nav class="nav-bar">
+      <a href="#">iPhone <span>⌄</span></a><a href="#">iPad</a><a href="#">Accessoires</a><a class="active" href="#deals">Beste deals</a><a href="#help">Keuzehulp</a><span class="nav-divider"></span><a class="sell-link" href="#" id="navSell">⇄ &nbsp;Verkopen</a>
+    </nav>
+
+    <main class="home-main">
+      <section class="hero">
+        <div class="hero-content">
+          <div class="eyebrow">SNEL • VEILIG • EENVOUDIG</div>
+          <h1>Verkoop je iPhone in slechts 5 stappen</h1>
+          <p>Ontvang direct een geschatte prijs voor je iPhone en verkoop hem eenvoudig via Mobix.</p>
+          <div class="hero-points"><span>✓ Gratis verzending</span><span>✓ Veilige gegevensverwijdering</span></div>
+        </div>
+        <div class="hero-phones" aria-hidden="true"><div class="phone phone-back"></div><div class="phone phone-front"><div class="phone-screen"></div></div></div>
+      </section>
+
+      <section class="model-section" id="deals">
+        <h2>Verkoop je Apple iPhone</h2>
+        <p class="section-sub">Selecteer een model</p>
+        <div class="model-search"><input id="modelSearch" placeholder="Zoek op model"><span>⌕</span></div>
+        <div class="choose-divider"><span>Of selecteer een merk en model</span></div>
+        <div class="model-grid" id="modelGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="tradePage" class="trade-page" hidden>
+    <header class="topbar"><a class="trade-logo" href="#" id="homeBack">m<span style="color:var(--green)">o</span>bix</a><a href="login.html" class="login-link">Inloggen</a><div class="step-label" id="stepLabel">1/8</div></header>
+    <div class="progress-wrap"><button class="back" id="backBtn" aria-label="Terug">←</button><div class="progress"><div id="progressBar"></div></div><span id="stepLabel2">1/8</span></div>
+    <main class="layout"><aside class="sidebar"><section class="price-card"><span>Geschatte waarde:</span><strong id="price">€ 100,00</strong></section><section class="summary-card" id="sideSummary"></section></aside><section class="panel" id="app"></section></main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
